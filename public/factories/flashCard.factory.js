@@ -7,6 +7,7 @@ app.factory('FlashCardFactory', function ($http) {
         .then(function (res) {
           return res.data;
         });
-      }
+      },
+      container:[]
     }
   })

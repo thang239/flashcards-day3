@@ -1,7 +1,7 @@
 var path = require('path');
 var express = require('express');
 var FlashCardModel = require('./models/flash-card-model');
-
+var bodyParser = require('body-parser');
 var app = express(); // Create an express app!
 module.exports = app; // Export it so it can be require('')'d
 
@@ -21,6 +21,11 @@ var indexHtmlPath = path.join(__dirname, '../index.html');
 // something in our public folder, serve up that file
 // e.g. angular.js, style.css
 app.use(express.static(publicPath));
+
+//using body parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // If we're hitting our home page, serve up our index.html file!
 app.get('/', function (req, res) {
@@ -43,3 +48,27 @@ app.get('/cards', function (req, res, next) {
     });
 
 });
+
+app.post('/cards',function(req, res, next){
+    console.log(req.body);
+    FlashCardModel.create(req.body)
+        .then(function(card){
+            res.json(card);
+        })
+
+    // res.end();
+})
+
+
+app.put('/cards/:flashCardId',function(req, res, next){
+    console.log(req.params.flashCardId);
+    console.log(req.body);
+
+    FlashCardModel.update({_id:req.params.flashCardId},req.body,function(err,card){
+        // console.log(card);
+        if(err) next(error);
+        res.send(card);
+    })
+})
+
+

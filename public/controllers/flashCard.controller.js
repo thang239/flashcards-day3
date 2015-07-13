@@ -17,5 +17,21 @@ app.controller('FlashCardCtrl', function ($scope, ScoreFactory) {
       }
     };
 
-    
-  })
+    $scope.editCardButton = function(){
+      $scope.edit=true;
+      $scope.editCard = $scope.theCard;
+    }
+
+
+})
+app.controller('EditFlashCardCtrl',function($scope,$http){
+  $scope.editCardFnc = function(editCard){
+    console.log(editCard);
+      $http.put('/cards'+'/'+$scope.theCard._id,editCard)
+        .success(function(card){
+          $scope.edit=false;
+        })
+  }
+})
+
+

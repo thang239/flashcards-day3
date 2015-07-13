@@ -2,12 +2,13 @@ app.controller('MainCtrl', function ($scope, FlashCardFactory) {
     // make a query
     FlashCardFactory.getFlashCards()
     .then(function (cards) {
-      $scope.flashCards = cards;
+      FlashCardFactory.container=cards;
+      $scope.flashCards = FlashCardFactory.container;
     })
     .catch(function (e) {
       console.log('e', e);
     })
-
+    FlashCardFactory.container = $scope.flashCards;
     $scope.categories = [
         'MongoDB',
         'Express',
@@ -22,7 +23,8 @@ app.controller('MainCtrl', function ($scope, FlashCardFactory) {
       $scope.flashCards = null;
       FlashCardFactory.getFlashCards(cat)
       .then(function (cards) {
-        $scope.flashCards = cards;
+        FlashCardFactory.container=cards;
+        $scope.flashCards = FlashCardFactory.container;
       });
     };
   })

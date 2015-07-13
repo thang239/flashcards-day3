@@ -15,6 +15,31 @@
             </div>
 
         </div>
+
+        <div ng-controller="NewCardController">
+          <form role="form" name="newCardForm" ng-submit="newCardForm.$valid&&submitCard(newCard)">
+            <!-- <pre>{{newCardForm | json}}</pre> -->
+            <div>
+              <input type="text" name="question" ng-model="newCard.question" required ng-minlength="15"> 
+            </div>
+            <div>
+              <select name="category" ng-model="newCard.category" required>
+                <option>MongoDB</option>
+                <option>Angular</option>
+                <option>Express</option>
+                <option>Node</option>
+
+              </select>
+            </div>
+            <div name="answers" ng-repeat="answer in newCard.answers">
+              <input type="text" ng-model="answer.text" ng-maxlength="40">
+              <input type="checkbox" ng-model="answer.correct">
+            </div>
+            <button type="submit"> Submit</button>
+            <!-- <p ng-show="newCardForm.$invalid&&newCardForm.$dirty"> You submit something wrong</p> -->
+          </form>
+
+      </div>
         <div ng-controller="MainCtrl">
           <button
             ng-repeat="category in categories"
@@ -28,11 +53,13 @@
           ></flash-card>
         </div>
       </div>
+
       <script src="angular.js"></script>
       <script src="app.js"></script>
       <script src="controllers/flashCard.controller.js"></script>
       <script src="controllers/main.controller.js"></script>
       <script src="controllers/stats.controller.js"></script>
+      <script src="controllers/NewCardController.js"></script>
       <script src="factories/flashCard.factory.js"></script>
       <script src="factories/score.factory.js"></script>
       <script src="directives/loader/loader.directive.js"></script>

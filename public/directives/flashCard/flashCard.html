@@ -1,7 +1,27 @@
-<div 
-  class="flash-card" 
-  ng-controller="FlashCardCtrl"
-  border-on-hover>
+<div class="flash-card" ng-controller="FlashCardCtrl" border-on-hover>
+    <button type="edit" ng-click="editCardButton()">Edit</button>
+
+    <div ng-controller="EditFlashCardCtrl" ng-show="edit">
+      <form role="form" name="editCardForm" ng-submit="editCardFnc(editCard)">
+        <!-- <pre>{{editCardForm | json}}</pre> -->
+        <input type="text" name="question" ng-model="editCard.question" required ng-minlength="15" value = {{editCard.question}}> 
+        <div>
+            <select name="category" ng-model="editCard.category" required value = {{editCard.category}}>
+              <option>MongoDB</option>
+              <option>Angular</option>
+              <option>Express</option>
+              <option>Node</option>
+            </select>
+        </div>
+        <div name="answers" ng-repeat="answer in editCard.answers">
+                <input type="text" ng-model="answer.text" ng-maxlength="40" value={{answer.text}}>
+                <input type="checkbox" ng-model="answer.correct" value={{answer.correct}} >
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+      
+    </div>
+
     <h1>
       {{ theCard.question}}
     </h1>
